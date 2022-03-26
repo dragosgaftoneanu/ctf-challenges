@@ -55,7 +55,7 @@ if(@$_GET['operatiune'] == "reseteaza")
 </form>
 <h1>Portofel</h1>
 <strong>RSTCoin:</strong> <?php $rstcoin = ($mysql->query("select value from rstcoin where name='rstcoin' and IP='".$_SERVER['REMOTE_ADDR']."'"))->fetch_array(MYSQLI_ASSOC)['value']; echo $rstcoin; ?><br />
-<strong>Flag:</strong> <?php echo $rstcoin >= 10 ? "Flag-ul nu a putut fi recuperat automat. Se include formularul de autentificare." : "Mai ai nevoie de " . (10 - $rstcoin) . " RSTCoin pentru a primi flag-ul.";  ?>
+<strong>Flag:</strong> <?php echo $rstcoin >= 10 ? "RST{2AA76A085CACFE553EA98F9586D58721}" : "Mai ai nevoie de " . (10 - $rstcoin) . " RSTCoin pentru a primi flag-ul.";  ?>
 
 </body>
 </html>
