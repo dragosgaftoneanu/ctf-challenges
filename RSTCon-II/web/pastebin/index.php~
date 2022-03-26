@@ -1,0 +1,30 @@
+<?php
+include "/var/www/pastebin/core.php";
+?><!DOCTYPE html>
+<html>
+<head>
+<title>RST pastebin</title>
+</head>
+<body>
+<h2>RST pastebin</h2>
+<?php
+$article = new article();
+if(@$_GET['id'] != "" && $article->validateSecret($_GET['secret']) == $_GET['secret']){
+	echo "<textarea style=\"width:300px;height:50px\">".get_article($_GET['id']."</textarea>";
+}else{
+	if(@$_POST['post'] != "")
+	{
+		$article->add_article($_POST['post'], generateSecret($article->get_last_id()+1));
+		echo "Postarea a fost salvata. Intra <a href=\"?id=".$article->get_last_id()."&secret=".$article->get_last_secret()."\">aici</a> pentru a o vedea.<br />";
+	}
+	echo "<form action=\"\" method=\"post\"><textarea style=\"width:300px;height:50px\" name=\"post\"></textarea><br /><input type=\"submit\" value=\"post\"></form>";
+}
+
+function generateSecret($id)
+{
+	$secretUuid = sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),mt_rand( 0, 0xffff ),mt_rand( 0, 0x0fff ) | 0x4000,mt_rand( 0, 0x3fff ) | 0x8000,mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ));
+	return md5('secret-${secretUuid}' . $id);
+}
+?>
+</body>
+</html>
